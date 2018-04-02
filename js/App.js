@@ -1,5 +1,5 @@
 /*
- * 应用程序入口文件 
+ * Application entry file 
  */
 
 Ext.ns("App");
