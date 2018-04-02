@@ -1,5 +1,5 @@
 /*
- * 用户登录
+ * User login
  */
 
 Ext.ns("App");
@@ -16,7 +16,7 @@ App.LoginWin = function() {
 		getWin: function() {
 			var form = this.getForm();
 			var win = new Ext.Window({
-				title: "用户登录",
+				Title :  " User login " ,
 				width: 400,
 				height: 250,
 				plain: true,
@@ -51,22 +51,22 @@ App.LoginWin = function() {
 					html: "<img src='img/logo.png' class='login-logo' />"
 				}, {
 					name: "username",
-					fieldLabel: "用户名",
+					fieldLabel :  " username " ,
 					value: "Neo"
 				}, {
 					inputType: "password",
 					name: "password",
-					fieldLabel: "密码",
+					fieldLabel: "password",
 					value: "123456"
 				}],
 				buttons: [{
-					text: "登录",
+					Text :  " Login " ,
 					scope: this,
 					handler: function() {
 						this.submit();
 					}
 				}, {
-					text: "重置",
+					Text :  " Reset " ,
 					scope: this,
 					handler: function() {
 						this.form.getForm().reset();
