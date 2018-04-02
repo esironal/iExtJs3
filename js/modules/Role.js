@@ -1,13 +1,13 @@
 /*
- * 角色管理
+ * Role Management
  */
 
 App.Role = function() {
 	return {
-		//定义变量
+		// define the variable
 		currentFormValues: {},
 		
-		//初始化
+		// initialize
 		render: function(id) {
 			if(!this.store) {
 				this.store = this.getStore();
@@ -21,14 +21,14 @@ App.Role = function() {
 			this.createGrid(id);
 		},
 		
-		//获取store
+		// Get store
 		getStore: function() {
 //			var store = new Ext.data.ArrayStore({
 //				fields: ["id", "name", "desc"],
 //				data: [
-//					["1", "超级管理员", "拥有系统的所有权限"],
-//					["2", "管理员", "拥有系统的部分管理权限"],
-//					["3", "网站编辑", "拥有文章的创建、发布、修改、删除权限"]
+// 					["1", "Super Administrator", "Has System All Permissions"],
+// 					["2", "Administrator", "Having partial administrative rights to the system"],
+// 					["3", "Site Editing," "Own, Create, Post, Modify, Delete Permissions for Article"]
 //				]
 //			});
 			var store = new Ext.data.JsonStore({
@@ -50,7 +50,7 @@ App.Role = function() {
 			return store;
 		},
 		
-		//创建表单
+		// Create a form
 		getForm: function() {
 			var form = new Ext.form.FormPanel({
 				labelWidth: 70,
@@ -69,20 +69,20 @@ App.Role = function() {
 					value: ""
 				}, {
 					name: "name",
-					fieldLabel: "角色名称"
+					fieldLabel :  " Role Name "
 				}, {
 					name: "desc",
 					xtype: "textarea",
 					fieldLabel: "描述"
 				}],
 				buttons: [{
-					text: "确定",
+					Text :  " OK " ,
 					scope: this,
 					handler: function() {
 						this.submit();
 					}
 				}, {
-					text: "重置",
+					Text :  " Reset " ,
 					scope: this,
 					handler: function() {
 						this.form.getForm().reset();
@@ -94,19 +94,19 @@ App.Role = function() {
 			return form;
 		},
 		
-		//提交表单
+		// Submit the form
 		submit: function() {
-			var fr = this.form.getForm();	//获取BasicForm对象
+			Var fr =  this . form . getForm ();	 // Get BasicForm object
 			if(fr.isValid()) {
 				var id = fr.findField("id").getValue();
 				
-				if(id) { //编辑
+				If (id) { // Edit
 					var rec = this.store.getById(id);
 					rec.set("name", fr.findField("name").getValue());
 					rec.set("desc", fr.findField("desc").getValue());
-//					this.store.rejectChanges();	//取消所有修改
-					this.store.commitChanges();	//提交修改数据
-				}else {	//新增
+// 					this.store.rejectChanges(); // cancel all changes
+					This . store . commitChanges ();	 // commit modified data
+				} Else {	 // Add new
 					var RoleRecord = Ext.data.Record.create([
 						{name: "id"},
 						{name: "name"},
@@ -114,12 +114,12 @@ App.Role = function() {
 					]);
 //					var rec = new RoleRecord({
 //						id: "4",
-//						name: "新增角色",
-//						desc: "这是测试用的新增角色"
+// 						name: "Add role,"
+// 						desc: "This is a new character for the test"
 //					}, id);
 					var obj = fr.getValues();
 					obj.id = this.store.data.length+1;
-					var rec = new RoleRecord(obj, obj.id);
+					var rec =  new  RoleRecord (obj, obj . a );
 					this.store.add(rec);
 				}
 				
@@ -128,7 +128,7 @@ App.Role = function() {
 			}
 		},
 		
-	    //创建窗口
+	    // Create a window
 	    getWin: function() {
 	    	var win = new Ext.Window({
 	    		width: 400,
@@ -156,34 +156,34 @@ App.Role = function() {
 	    	return win;
 	    },
 		
-		//创建Grid
+		// Create Grid
 		createGrid: function(id) {
 			var panel = Ext.getCmp(id);
 			panel.body.dom.innerHTML = "";
 			var sm = new Ext.grid.CheckboxSelectionModel();
 			
 			this.grid = new Ext.grid.GridPanel({
-				tbar: [{
-					text: "新增",
+				tbar : [{
+					Text :  " New " ,
 					iconCls: "x-btn-add",
 					scope: this,
 					handler: this.add
 				}, "-", {
-					text: "编辑",
+					Text :  " edit " ,
 					iconCls: "x-btn-edit",
 					scope: this,
 					handler: this.edit
 				}, "-", {
-					text: "删除",
+					Text :  " Delete " ,
 					iconCls: "x-btn-del",
 					scope: this,
 					handler: this.del
 				}, "->", {
 					xtype: "textfield",
-					emptyText: "请输入关键字"
+					emptyText :  " Please enter keyword "
 				}, {
 					xtype: "button",
-					text: "查询",
+					Text :  " Query " ,
 					iconCls: "x-btn-search",
 					scope: this,
 					handler: this.search
@@ -202,7 +202,7 @@ App.Role = function() {
 					sortable: true,
 					dataIndex: "id"
 				}, {
-					header: "角色名称",
+					Header :  " role name " ,
 					width: 200,
 					sortable: true,
 					dataIndex: "name"
@@ -221,15 +221,15 @@ App.Role = function() {
 			panel.add(this.grid);
 		},
 		
-		//查询
+		// Query
 		search: function() {
 			//console.log("Search ...");
 			this.store.reload();
 		},
 		
-		//新增
+		// Add
 		add: function() {
-			this.win.setTitle("新增角色");
+			This . win . setTitle ( " add role " );
 			Ext.apply(this.currentFormValues, {
 				id: "",
 				name: "",
@@ -238,10 +238,10 @@ App.Role = function() {
 			this.win.show();
 		},
 		
-		//编辑
+		// edit
 		edit: function() {
 			if(this.grid.getSelectionModel().hasSelection()) {
-				this.win.setTitle("编辑角色");
+				This . win . setTitle ( " edit role " );
 				var rec = this.grid.getSelectionModel().getSelected();
 				Ext.apply(this.currentFormValues, {
 					id: rec.data.id,
@@ -251,11 +251,11 @@ App.Role = function() {
 //				this.form.getForm().loadRecord(rec);
 				this.win.show();
 			}else {
-				Ext.Msg.alert("信息", "请选择要编辑的角色！");
+				Ext . Msg . alert ( " Message " , " Please select the character you want to edit! " );
 			}
 		},
 		
-		//删除
+		// Delete
 		del: function() {
 			if(this.grid.getSelectionModel().hasSelection()) {
 				var st = this.store;
@@ -264,26 +264,15 @@ App.Role = function() {
 				for(var i=0;i<recs.length;i++) {
 					names += recs[i].data.name+"<br />";
 				}
-				Ext.Msg.confirm("确认", "确认删除以下角色？<br />"+names, function(btn) {
+				Ext . Msg . confirm ( " confirm " , " confirm to delete the following roles?<br /> " + names, function ( btn ) {
 					if(btn=="yes") {
-						st.remove(recs); //前台删除
+						St . remove (recs); // front desk delete
 						//st.reload();
 					}
 				});
 			}else {
-				Ext.Msg.alert("信息", "请选择要删除的角色！");
+				Ext . Msg . alert ( " Messages " , " Please select the characters to be deleted! " );
 			}
 		}
 	}
 }();
-
-
-
-
-
-
-
-
-
-
-
