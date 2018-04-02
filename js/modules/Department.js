@@ -1,10 +1,11 @@
+
 /*
- * 部门管理
+ * Department management
  */
 
 App.Department = function() {
 	return {
-		//初始化
+		// initialize
 		render: function(id) {
 			if(!this.departmentWin) {
 				this.departmentWin = this.getDepartmentWin();
@@ -21,7 +22,7 @@ App.Department = function() {
 			this.createTree(id);
 		}, 
 		
-		//创建TreePanel
+		// Create TreePanel
 		createTree: function(id) {
 			var panel = Ext.getCmp(id);
 			panel.body.dom.innerHTML = "";
@@ -50,7 +51,7 @@ App.Department = function() {
 					scope: this,
 					handler: this.refresh
 				}],
-				bbar: [{
+				bbar : [{
 					text: "保存",
 					iconCls: "x-btn-save",
 					scope: this
@@ -62,13 +63,13 @@ App.Department = function() {
 				contextMenu: new Ext.menu.Menu({
 					minWidth: 120,
 					items: [{
-						text: "添加部门",
+						Text :  " Add department " ,
 						itemId: "addBtn",
 						iconCls: "x-btn-add",
 						scope: this,
 						handler: this.addDepartment
 					}, {
-						text: "添加员工",
+						Text :  " Add Employee " ,
 						itemId: "selBtn",
 						iconCls: "x-btn-file-search",
 						scope: this,
@@ -79,16 +80,16 @@ App.Department = function() {
 						scope: this,
 						handler: this.moveUp
 					}, {
-						text: "下移",
+						Text :  " move down " ,
 						iconCls: "x-btn-down",
 						scope: this,
 						handler: this.moveDown
 					}, "-", {
-						text: "编辑",
+						Text :  " edit " ,
 						itemId: "editBtn",
 						iconCls: "x-btn-edit"
 					}, {
-						text: "删除",
+						Text :  " Delete " ,
 						iconCls: "x-btn-del",
 						scope: this,
 						handler: this.delNode
@@ -101,7 +102,7 @@ App.Department = function() {
 					},
 					contextmenu: function(node, ev) {
 						node.select();
-						var t = node.attributes.type;
+						var t =  node . attributes . type ;
 						var cm = node.getOwnerTree().contextMenu;
 						var addBtn = cm.getComponent("addBtn");
 						var selBtn = cm.getComponent("selBtn");
@@ -122,7 +123,7 @@ App.Department = function() {
 							}
 						}
 						cm.contextNode = node;
-						cm.showAt(ev.getXY());
+						cm . showAt ( ev . getXY ());
 					}
 				}
 			});
@@ -130,28 +131,28 @@ App.Department = function() {
 			panel.add(this.tree);
 		},
 		
-		//刷新整个树
+		// Refresh the entire tree
 		refresh: function() {
 			this.tree.root.reload();
 			this.tree.expandAll();
 		},
 		
-		//添加部门
+		// Add department
 		addDepartment: function() {
 			this.departmentWin.show();
 		},
 		
-		//添加员工
+		// Add employee
 		addEmployee: function() {
 			this.employeeWin.show();
 		},
 		
-		//获取departmentWin
+		// Get departmentWin
 		getDepartmentWin: function() {
 			var win = new Ext.Window({
 				width: 600,
 	    		height: 250,
-	    		title: "添加部门",
+	    		Title :  " Add Department " ,
 	    		plain: true,
 	    		resizable: false,
 	    		frame: true,
@@ -171,7 +172,7 @@ App.Department = function() {
 					items: [{
 						xtype: "textfield",
 						name: "topicName",
-						fieldLabel: "部门名称",
+						fieldLabel :  " Department Name " ,
 						tabIndex: 1,
 						anchor: "99%",
 						allowBlank: false
@@ -181,19 +182,19 @@ App.Department = function() {
 			return win;
 		},
 		
-		//获取employeeGrid
+		// Get employeeGrid
 		getEmployeeGrid: function() {
 			var sm = new Ext.grid.CheckboxSelectionModel();
 			var grid = new Ext.grid.GridPanel({
-				tbar: [{
+				tbar : [{
 					xtype: "textfield",
-					emptyText: "英文名称"
+					emptyText :  " English name "
 				}, {
 					xtype: "textfield",
-					emptyText: "中文名称",
+					emptyText :  " Chinese name " ,
 					style: "margin-left:5px;"
 				}, {
-					text: "查询",
+					Text :  " Query " ,
 					iconCls: "x-btn-search",
 					scope: this
 				}, "->", {
@@ -209,7 +210,7 @@ App.Department = function() {
 				store: this.employeeStore,
 				sm: sm,
 				columns: [sm, {
-					header: "员工工号",
+					Header :  " Employee ID " ,
 					width: 100,
 					sortable: true,
 					dataIndex: "code"
@@ -231,7 +232,7 @@ App.Department = function() {
 			return grid;
 		},
 	
-		//获取employeeStore
+		// Get employeeStore
 		getEmployeeStore: function() {
 			var store = new Ext.data.ArrayStore({
 				fields: ["code", "nameEn", "nameZh"],
@@ -244,12 +245,12 @@ App.Department = function() {
 			return store;
 		},
 	
-		//获取employeeWin
+		// Get employeeWin
 		getEmployeeWin: function() {
 			var win = new Ext.Window({
 				width: 600,
 	    		height: 400,
-	    		title: "添加员工",
+	    		Title :  " Add Employee " ,
 	    		plain: true,
 	    		resizable: false,
 	    		frame: true,
@@ -262,37 +263,37 @@ App.Department = function() {
 			return win;
 		},
 	
-		//上移
+		// Move up
 		moveUp: function(item) {
 			var ctNode = item.parentMenu.contextNode;
 			if(!ctNode.isFirst()) {
-				var parNode = ctNode.parentNode;
+				var byNode =  ctNode . parentNode ;
 				var prevNode = ctNode.previousSibling;
 				parNode.insertBefore(ctNode, prevNode);
 			}
 		},
 		
-		//下移
+		// down
 		moveDown: function(item) {
 			var ctNode = item.parentMenu.contextNode;
 			if(!ctNode.isLast()) {
-				var parNode = ctNode.parentNode;
-				var nextNode = ctNode.nextSibling;
+				var byNode =  ctNode . parentNode ;
+				was nextNode =  ctNode . nextSibling ;
 				parNode.insertBefore(nextNode, ctNode);
 			}
 		},
 		
-		//删除节点
+		// Delete node
 		delNode: function(item) {
 			var ctNode = item.parentMenu.contextNode;
 			if(ctNode.isLeaf()) {
-				Ext.Msg.confirm("确认", "确认删除该子节点？<br />"+ctNode.attributes.text, function(btn) {
+				Ext . Msg . confirm ( " Confirm " , " Confirm to delete this child node?<br /> " + ctNode . attributes . text , function ( btn ) {
 					if(btn=="yes") {
 						ctNode.remove();
 					}
 				});
 			}else {
-				Ext.Msg.confirm("确认", "确认删除该父节点（包括其子节点）？<br />"+ctNode.attributes.text, function(btn) {
+				Ext . Msg . confirm ( " confirm " , " confirm to delete the parent node (including its children)? <br /> " + ctNode . attributes . Text , function ( btn ) {
 					if(btn=="yes") {
 						ctNode.remove();
 					}
@@ -301,25 +302,3 @@ App.Department = function() {
 		}
 	};
 }();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
