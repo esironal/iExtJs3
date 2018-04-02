@@ -1,13 +1,13 @@
 /*
- * 用户管理
+ * User Management
  */
 
 App.User = function() {
 	return {
-		//定义变量
+		// define the variable
 		currentFormValues: {},
 		
-		//初始化
+		// initialize
 		render: function(id) {
 			if(!this.store) {
 				this.store = this.getStore();
@@ -21,20 +21,20 @@ App.User = function() {
 			this.createGrid(id);
 		},
 		
-		//获取store
+		// Get store
 		getStore: function() {
 //			var store = new Ext.data.ArrayStore({
 //				fields: ["id", "name", "desc"],
 //				data: [
-//					["1", "超级管理员", "拥有系统的所有权限"],
-//					["2", "管理员", "拥有系统的部分管理权限"],
-//					["3", "网站编辑", "拥有文章的创建、发布、修改、删除权限"]
+// 					["1", "Super Administrator", "Has System All Permissions"],
+// 					["2", "Administrator", "Having partial administrative rights to the system"],
+// 					["3", "Site Editing," "Own, Create, Post, Modify, Delete Permissions for Article"]
 //				]
 //			});
 			var store = new Ext.data.JsonStore({
 				//store configs
 				storeId: "userStore",
-				autoLoad: true, //自动加载
+				autoLoad :  true , // autoload
 				fields: [
 					{name: "id"},
 					{name: "name"},
@@ -52,7 +52,7 @@ App.User = function() {
 			return store;
 		},
 		
-		//创建表单
+		// Create a form
 		getForm: function() {
 			var form = new Ext.form.FormPanel({
 				labelWidth: 40,
@@ -72,19 +72,19 @@ App.User = function() {
 					}, {
 						xtype: "textfield",
 						name: "name",
-						fieldLabel: "姓名",
+						fieldLabel :  " Name",
 						tabIndex: 1,
 						anchor: "98%",
 						allowBlank: false
 					}, {
 						xtype: "combo",
 						name: "state",
-						fieldLabel: "状态",
+						fieldLabel :  " Status",
 						tabIndex: 3,
 						anchor: "98%",
 						allowBlank: false,
 						mode: "local",
-						store: new Ext.data.ArrayStore({	//本地数据源
+						Store :  new  Ext.data.ArrayStore ({	 // local data source
 							autoLoad: true,
 							fields: ["val", "txt"],
 							data: [
@@ -108,9 +108,9 @@ App.User = function() {
 						tabIndex: 2,
 						anchor: "98%",
 						allowBlank: false,
-						emptyText: "选择角色",
-						mode: "local", //以GET方式加载
-						store: new Ext.data.JsonStore({	//远程数据源
+						emptyText :  " select role " ,
+						Mode :  " local " , // Load with GET
+						Store :  new  Ext.data.JsonStore ({	 // remote data source
 							autoLoad: true,
 							url: "data/role.json",
 							root: "rows",
@@ -130,13 +130,13 @@ App.User = function() {
 					}]
 				}],
 				buttons: [{
-					text: "确定",
+					Text :  " OK " ,
 					scope: this,
 					handler: function() {
 						this.submit();
 					}
 				}, {
-					text: "重置",
+					Text :  " Reset " ,
 					scope: this,
 					handler: function() {
 						this.form.getForm().reset();
@@ -148,21 +148,21 @@ App.User = function() {
 			return form;
 		},
 		
-		//提交表单
+		// Submit the form
 		submit: function() {
-			var fr = this.form.getForm();	//获取BasicForm对象
+			Var fr =  this . form . getForm ();	 // Get BasicForm object
 			if(fr.isValid()) {
 				var id = fr.findField("id").getValue();
 				
-				if(id) { //编辑
+				If (id) { // Edit
 					var rec = this.store.getById(id);
 					rec.set("name", fr.findField("name").getValue());
 					rec.set("role", fr.findField("role").getValue());
 					rec.set("state", fr.findField("state").getValue());
 					rec.set("remark", fr.findField("remark").getValue());
-//					this.store.rejectChanges();	//取消所有修改
-					this.store.commitChanges();	//提交修改数据
-				}else {	//新增
+// 					this.store.rejectChanges(); // cancel all changes
+					This . store . commitChanges ();	 // commit modified data
+				} Else {	 // Add new
 					var UserRecord = Ext.data.Record.create([
 						{name: "id"},
 						{name: "name"},
@@ -172,8 +172,8 @@ App.User = function() {
 					]);
 //					var rec = new RoleRecord({
 //						id: "4",
-//						name: "新增角色",
-//						desc: "这是测试用的新增角色"
+// 						name: "Add role,"
+// 						desc: "This is a new character for the test"
 //					}, id);
 					var obj = fr.getValues();
 					obj.id = this.store.data.length+1;
@@ -186,7 +186,7 @@ App.User = function() {
 			}
 		},
 		
-	    //创建窗口
+	    // Create a window
 	    getWin: function() {
 	    	var win = new Ext.Window({
 	    		width: 600,
@@ -214,34 +214,34 @@ App.User = function() {
 	    	return win;
 	    },
 		
-		//创建Grid
+		// Create Grid
 		createGrid: function(id) {
 			var panel = Ext.getCmp(id);
 			panel.body.dom.innerHTML = "";
 			var sm = new Ext.grid.CheckboxSelectionModel();
 			
 			this.grid = new Ext.grid.GridPanel({
-				tbar: [{
-					text: "新增",
+				tbar : [{
+					Text :  " New " ,
 					iconCls: "x-btn-add",
 					scope: this,
 					handler: this.add
 				}, "-", {
-					text: "编辑",
+					Text :  " edit " ,
 					iconCls: "x-btn-edit",
 					scope: this,
 					handler: this.edit
 				}, "-", {
-					text: "删除",
+					Text :  " Delete " ,
 					iconCls: "x-btn-del",
 					scope: this,
 					handler: this.del
 				}, "->", {
 					xtype: "textfield",
-					emptyText: "请输入关键字"
+					emptyText :  " Please enter keyword "
 				}, {
 					xtype: "button",
-					text: "查询",
+					Text :  " Query " ,
 					iconCls: "x-btn-search",
 					scope: this,
 					handler: this.search
@@ -292,15 +292,15 @@ App.User = function() {
 			panel.add(this.grid);
 		},
 		
-		//查询
+		// Query
 		search: function() {
 			//console.log("Search ...");
 			this.store.reload();
 		},
 		
-		//新增
+		// Add
 		add: function() {
-			this.win.setTitle("新增用户");
+			This . win . setTitle ( " new user " );
 			Ext.apply(this.currentFormValues, {
 				id: "",
 				name: "",
@@ -311,10 +311,10 @@ App.User = function() {
 			this.win.show();
 		},
 		
-		//编辑
+		// edit
 		edit: function() {
 			if(this.grid.getSelectionModel().hasSelection()) {
-				this.win.setTitle("编辑用户");
+				This . win . setTitle ( " edit user " );
 				var rec = this.grid.getSelectionModel().getSelected();
 				Ext.apply(this.currentFormValues, {
 					id: rec.data.id,
@@ -326,11 +326,11 @@ App.User = function() {
 //				this.form.getForm().loadRecord(rec);
 				this.win.show();
 			}else {
-				Ext.Msg.alert("信息", "请选择要编辑的用户！");
+				Ext . Msg . alert ( " Messages " , " Please select the user to edit! " );
 			}
 		},
 		
-		//删除
+		// Delete
 		del: function() {
 			if(this.grid.getSelectionModel().hasSelection()) {
 				var st = this.store;
@@ -339,26 +339,15 @@ App.User = function() {
 				for(var i=0;i<recs.length;i++) {
 					names += recs[i].data.name+"<br />";
 				}
-				Ext.Msg.confirm("确认", "确认删除以下用户？<br />"+names, function(btn) {
+				Ext . Msg . confirm ( " confirm " , " confirm to delete the following user?<br /> " + names, function ( btn ) {
 					if(btn=="yes") {
-						st.remove(recs); //前台删除
+						St . remove (recs); // front desk delete
 						//st.reload();
 					}
 				});
 			}else {
-				Ext.Msg.alert("信息", "请选择要删除的用户！");
+				Ext . Msg . alert ( " Message " , " Please select the user to delete! " );
 			}
 		}
 	}
 }();
-
-
-
-
-
-
-
-
-
-
-
