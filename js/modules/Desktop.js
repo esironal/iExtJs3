@@ -1,10 +1,10 @@
 /*
- * 首页
+ * Home
  */
 
 App.Desktop = function() {
 	
-	//日期格式化
+	// date format
 	function formatDate(val) {
         return Ext.isDate(val) ? val.dateFormat('Y-m-d') : val;
     }
@@ -32,7 +32,7 @@ App.Desktop = function() {
 		},
 		
 		createDesktop: function(t) {
-			var desktop = new Ext.Panel({
+			was desktop = new Ext.Panel({
 				border: false,
 				layout: "border",
 				items: [
@@ -66,7 +66,7 @@ App.Desktop = function() {
 				title: "Panel A",
 				tools: [{
 					id: "help",
-					qtip: "帮助",
+					Qtip :  " Help " ,
 					handler: function(ev, toolEl, panel) {}
 				}]
 			};
@@ -87,7 +87,7 @@ App.Desktop = function() {
 				xtype: "editorgrid",
 				cls: "col-grid",
 				margins: {top:0, right:6, bottom:0, left:6},
-				title: "插件使用示例 (ColumnHeaderGroup + DatePickerPlus)",
+				Title :  " Plugins usage example (ColumnHeaderGroup + DatePickerPlus) " ,
 				store: this.store,
 				sm: this.sm,
 				clicksToEdit: 1,
@@ -149,7 +149,7 @@ App.Desktop = function() {
 					editor: new Ext.form.TextField()
 				}, {
 					xtype: "actioncolumn",
-					header: "&nbsp;",
+					header: " ",
 					align: "center",
 					menuDisabled: true,
 					iconCls: "x-btn-del",
@@ -229,26 +229,3 @@ App.Desktop = function() {
 		}
 	};
 }();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
